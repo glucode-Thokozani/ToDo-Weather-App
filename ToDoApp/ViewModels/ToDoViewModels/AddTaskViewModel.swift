@@ -9,7 +9,7 @@ import Combine
 import Foundation
 
 class AddTaskViewModel: ObservableObject {
-    private let storage = ToDoStorage()
+    private let storage: ToDoStorage
 
     @Published var taskTitle: String = ""
     @Published var dueDate: Date = Date()
@@ -17,8 +17,9 @@ class AddTaskViewModel: ObservableObject {
 
     private let category: Category
 
-    init(category: Category) {
+    init(category: Category, toDoStorage: ToDoStorage) {
         self.category = category
+        self.storage = toDoStorage
     }
 
     func addTask() {

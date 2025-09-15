@@ -6,14 +6,17 @@
 //
 import SwiftUI
 
-@MainActor
 class DayToDayViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     
     @Published var dailyForecast: [ForecastDay] = []
     
-    private let weatherService = WeatherService()
+    private let weatherService: WeatherService
+    
+    init(weatherService: WeatherService) {
+        self.weatherService = weatherService
+    }
     
     func getDayToDayWeather(for location: String) async {
         errorMessage = nil
@@ -21,6 +24,13 @@ class DayToDayViewModel: ObservableObject {
         
         do {
             let dailyWeather = try await weatherService.fetchWeather(for: location)
+            
+            // Debug: Print the first day's condition data
+            if let firstDay = dailyWeather.forecast.forecastday.first {
+                print("🌤️ DayToDayViewModel: First day condition text: \(firstDay.day.condition.text)")
+                print("🌤️ DayToDayViewModel: First day condition icon: \(firstDay.day.condition.icon)")
+            }
+            
             dailyForecast = dailyWeather.forecast.forecastday
         } catch {
             dailyForecast = []
@@ -36,23 +46,5 @@ class DayToDayViewModel: ObservableObject {
             return weekdayFormatter.string(from: date)
         }
         return "Unknown"
-    }
-    func getSFIconName(for condition: String) -> String {
-        let lower = condition.lowercased()
-        
-        if lower.contains("sun") {
-            return "sun.max.fill"
-        } else if lower.contains("cloud") {
-            return "cloud.fill"
-        } else if lower.contains("rain") {
-            return "cloud.rain.fill"
-        } else if lower.contains("snow") {
-            return "snowflake"
-        } else if lower.contains("clear"){
-            return "moon.stars.fill"
-        }
-        else {
-            return "questionmark"
-        }
     }
 }

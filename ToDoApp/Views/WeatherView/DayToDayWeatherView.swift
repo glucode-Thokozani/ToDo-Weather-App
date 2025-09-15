@@ -6,8 +6,12 @@
 //
 import SwiftUI
 
+// Updated DayToDayWeatherView
 struct DayToDayWeatherView: View {
-    @StateObject private var dailyViewModel = DayToDayViewModel()
+    @StateObject private var dailyViewModel: DayToDayViewModel
+    init(dailyViewModel: DayToDayViewModel) {
+        self._dailyViewModel = StateObject(wrappedValue: dailyViewModel)
+    }
     
     var body: some View {
         ScrollView {
@@ -18,12 +22,13 @@ struct DayToDayWeatherView: View {
                             .font(.system(size: 20, weight: .medium))
                             .foregroundColor(.white)
                             .frame(width: 150, alignment: .leading)
-                        Image(systemName: dailyViewModel.getSFIconName(for: day.day.condition.text))
-                            .renderingMode(.original)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 40, height: 40)
-                            .foregroundColor(.white)
+                        
+                        WeatherIconView(
+                            iconURL: day.day.condition.icon,
+                            size: 40,
+                            fallbackIcon: "questionmark",
+                            conditionText: day.day.condition.text
+                        )
                         
                         Text("\(Int(day.day.avgtempC))°C")
                             .font(.system(size: 20, weight: .medium))
@@ -47,7 +52,11 @@ struct DayToDayWeatherView: View {
 }
 
 struct TomorrowWeatherView: View {
-    @StateObject private var dailyViewModel = DayToDayViewModel()
+    @StateObject private var dailyViewModel: DayToDayViewModel
+    
+    init(dailyViewModel: DayToDayViewModel) {
+        self._dailyViewModel = StateObject(wrappedValue: dailyViewModel)
+    }
     
     var body: some View {
         VStack {
@@ -58,12 +67,12 @@ struct TomorrowWeatherView: View {
                     .font(.system(size: 50, weight: .bold))
                     .foregroundColor(.white)
                 
-                Image(systemName: dailyViewModel.getSFIconName(for: tomorrow.day.condition.text))
-                    .renderingMode(.original)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 50, height: 50)
-                    .foregroundColor(.white)
+                WeatherIconView(
+                    iconURL: tomorrow.day.condition.icon,
+                    size: 50,
+                    fallbackIcon: "questionmark",
+                    conditionText: tomorrow.day.condition.text
+                )
                 
                 Text(tomorrow.day.condition.text)
                     .font(.headline)

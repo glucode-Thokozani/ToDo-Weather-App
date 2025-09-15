@@ -4,20 +4,35 @@
 //
 //  Created by Thokozani Mncube on 2025/08/19.
 //
+
 import SwiftUI
-import SwiftUIPager
+ 
 
 struct WeatherView: View {
-    @StateObject private var viewModel = WeatherViewModel()
+    @StateObject private var viewModel: WeatherViewModel
+    private let hourToHourWeatherView: AnyView
+    private let tomorrowWeatherView: AnyView
+    private let dayToDayWeatherView: AnyView
+    @State private var selected = 0
+    
+    init(viewModel: WeatherViewModel,
+         hourToHourWeatherView: AnyView,
+         tomorrowWeatherView: AnyView,
+         dayToDayWeatherView: AnyView) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+        self.hourToHourWeatherView = hourToHourWeatherView
+        self.tomorrowWeatherView = tomorrowWeatherView
+        self.dayToDayWeatherView = dayToDayWeatherView
+    }
     
     var body: some View {
         ZStack {
-            BackGroundColorView(startColor: Color.blue, endColor: Color("LightBlue"))
+            BackgroundView()
             VStack {
                 WeatherLocationView(cityName: viewModel.cityName)
                 ScrollView {
                     Spacer()
-                    MainWeatherView(temperature: viewModel.currentTemperature)
+                    MainWeatherView(viewModel: viewModel, temperature: viewModel.currentTemperature)
                     Spacer()
                     HStack {
                         AstronomyScrollView(astronomy: viewModel.astronomy)
@@ -26,25 +41,17 @@ struct WeatherView: View {
                     .cornerRadius(12)
                     .padding()
                     Spacer()
-                    WeatherPickerView()
+                    WeatherPickerView(
+                        hourToHourWeatherView: hourToHourWeatherView,
+                        tomorrowWeatherView: tomorrowWeatherView,
+                        dayToDayWeatherView: dayToDayWeatherView
+                    )
                 }
             }
         }
         .onAppear {
             viewModel.fetchWeather(for: "Johannesburg")
         }
-    }
-}
-
-struct BackGroundColorView: View {
-    var startColor: Color
-    var endColor: Color
-    
-    var body: some View {
-        LinearGradient(gradient: Gradient(colors: [startColor, endColor]),
-                       startPoint: .topLeading,
-                       endPoint: .bottomTrailing)
-        .edgesIgnoringSafeArea(.all)
     }
 }
 
@@ -56,6 +63,7 @@ struct WeatherLocationView: View {
             Image("LocationPin")
                 .resizable()
                 .frame(width: 30, height: 30)
+            
             Text(cityName)
                 .font(.system(size: 25, weight: .medium))
                 .foregroundColor(.white)
@@ -66,13 +74,8 @@ struct WeatherLocationView: View {
 }
 
 struct MainWeatherView: View {
-    @StateObject private var viewModel = WeatherViewModel()
+    @ObservedObject var viewModel: WeatherViewModel
     var temperature: Int
-    var conditionText: String = ""
-    
-    var weatherInformation: (icon: String, text: String) {
-        viewModel.evaluateTemperature(temperature: temperature)
-    }
     
     var body: some View {
         VStack {
@@ -80,22 +83,23 @@ struct MainWeatherView: View {
                 .font(.system(size: 60, weight: .bold))
                 .foregroundColor(.white)
             
-            Image(systemName: weatherInformation.icon)
-                .renderingMode(.original)
-                .resizable()
-                .frame(width: 50, height: 50)
-                .foregroundColor(.white)
+            WeatherIconView(
+                iconURL: viewModel.currentCondition?.icon ?? "",
+                size: 50,
+                fallbackIcon: "questionmark",
+                conditionText: viewModel.currentCondition?.text ?? ""
+            )
             
-            Text(conditionText.isEmpty ? weatherInformation.text : viewModel.currentConditionText)
+            Text(viewModel.currentCondition?.text ?? "")
                 .font(.system(size: 20, weight: .bold))
                 .foregroundColor(.white)
-                .padding()
+                .padding(.top, 5)
         }
     }
 }
 
 struct AstronomyScrollView: View {
-    @StateObject private var page: Page = .first()
+    @State private var selectedPage: Int = 0
     let astronomy: Astro?
     
     var body: some View {
@@ -110,38 +114,54 @@ struct AstronomyScrollView: View {
             ]
         ]
         
-        Pager(page: page, data: Array(pages.indices), id: \.self) { index in
-            HStack(spacing: 175) {
-                ForEach(pages[index], id: \.title) { event in
-                    VStack {
-                        Image(systemName: event.icon)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 40, height: 40)
-                            .foregroundColor(.white)
-                        
-                        Text(event.title)
-                            .font(.headline)
-                            .foregroundColor(.white)
-                        
-                        Text(event.time)
-                            .font(.caption)
-                            .foregroundColor(.white.opacity(0.8))
+        TabView(selection: $selectedPage) {
+            ForEach(pages.indices, id: \.self) { index in
+                HStack(spacing: 175) {
+                    ForEach(pages[index], id: \.title) { event in
+                        VStack {
+                            Image(systemName: event.icon)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 40, height: 40)
+                                .foregroundColor(.white)
+                            
+                            Text(event.title)
+                                .font(.headline)
+                                .foregroundColor(.white)
+                            
+                            Text(event.time)
+                                .font(.caption)
+                                .foregroundColor(.white.opacity(0.8))
+                        }
                     }
                 }
+                .tag(index)
             }
         }
-        .loopPages()
-        .itemSpacing(10)
-        .preferredItemSize(CGSize(width: UIScreen.main.bounds.width * 0.8, height: 130))
+        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
         .frame(height: 130)
-        .animation(.easeInOut(duration: 0.3), value: page.index)
     }
+}
+
+struct AstronomyEvent: Identifiable {
+    let id = UUID()
+    let title: String
+    let icon: String
+    let time: String
 }
 
 struct WeatherPickerView: View {
     @State private var selected = 0
-    
+    private let hourToHourWeatherView: AnyView
+    private let tomorrowWeatherView: AnyView
+    private let dayToDayWeatherView: AnyView
+
+    init(hourToHourWeatherView: AnyView, tomorrowWeatherView: AnyView, dayToDayWeatherView: AnyView) {
+        self.hourToHourWeatherView = hourToHourWeatherView
+        self.tomorrowWeatherView = tomorrowWeatherView
+        self.dayToDayWeatherView = dayToDayWeatherView
+    }
+
     var body: some View {
         VStack {
             Picker("Weather: ", selection: $selected) {
@@ -152,29 +172,18 @@ struct WeatherPickerView: View {
             .pickerStyle(.segmented)
             .padding(.horizontal)
             .accentColor(.white)
-            
+
             if selected == 0 {
-                HourToHourWeatherView()
-                    .frame(height: 150) 
+                hourToHourWeatherView
+                    .frame(height: 150)
             } else if selected == 1 {
-                TomorrowWeatherView()
+                tomorrowWeatherView
                     .frame(height: 150)
             } else {
-                DayToDayWeatherView()
+                dayToDayWeatherView
             }
         }
     }
 }
 
 
-
-struct AstronomyEvent: Identifiable {
-    let id = UUID()
-    let title: String
-    let icon: String
-    let time: String
-}
-
-#Preview {
-    WeatherView()
-}

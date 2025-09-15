@@ -9,9 +9,13 @@ import SwiftUI
 import RealmSwift
 
 struct TasksView: View {
-    @StateObject private var viewModel = TaskViewModel()
-    @State private var showAddTask = false
-    @State private var showAddCategory = false
+    @StateObject private var viewModel: TaskViewModel
+    private let dependencyContainer: ToDoDependencyContainer
+    
+    init(viewModel: TaskViewModel, dependencyContainer: ToDoDependencyContainer) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+        self.dependencyContainer = dependencyContainer
+    }
 
     var body: some View {
         VStack {
@@ -19,7 +23,7 @@ struct TasksView: View {
             
             CategoriesView(categories: viewModel.categories, selectedCategory: $viewModel.selectedCategory)
             Button(action: {
-                showAddCategory = true
+                viewModel.showAddCategory = true
             }) {
                 HStack {
                     Image(systemName: "folder.badge.plus")
@@ -27,10 +31,10 @@ struct TasksView: View {
                 }
                 .padding(.horizontal)
             }
-            .sheet(isPresented: $showAddCategory) {
+            .sheet(isPresented: $viewModel.showAddCategory) {
                 AddCategoryView { newCategoryName in
                     viewModel.addCategory(name: newCategoryName)
-                    showAddCategory = false
+                    viewModel.showAddCategory = false
                 }
             }
             
@@ -48,11 +52,11 @@ struct TasksView: View {
             Spacer()
 
             AddTaskButton {
-                showAddTask = true
+                viewModel.showAddTask = true
             }
-            .sheet(isPresented: $showAddTask) {
+            .sheet(isPresented: $viewModel.showAddTask) {
                 if let selected = viewModel.selectedCategory {
-                    AddTaskView(viewModel: AddTaskViewModel(category: selected))
+                    dependencyContainer.addTaskView(for: selected)
                 } else {
                     Text("Please select a category before adding a task.")
                         .padding()
@@ -223,7 +227,5 @@ struct AddCategoryView: View {
         }
     }
 }
-#Preview{
-    TasksView()
-}
+
 

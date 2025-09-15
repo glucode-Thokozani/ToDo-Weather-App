@@ -11,15 +11,10 @@ import RealmSwift
 struct EditTaskView: View {
     @Environment(\.dismiss) var dismiss
 
-    @StateObject var viewModel: EditTaskViewModel
-    var categories: Results<Category>
+    @StateObject private var viewModel: EditTaskViewModel
 
-    @State private var selectedCategoryId: String
-
-    init(task: ToDo, categories: Results<Category>) {
-        _viewModel = StateObject(wrappedValue: EditTaskViewModel(task: task))
-        self.categories = categories
-        self._selectedCategoryId = State(initialValue: task.category?.id ?? categories.first?.id ?? "")
+    init(viewModel: EditTaskViewModel) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
     }
 
     var body: some View {
@@ -36,8 +31,8 @@ struct EditTaskView: View {
                 }
 
                 Section(header: Text("Category")) {
-                    Picker("Category", selection: $selectedCategoryId) {
-                        ForEach(categories, id: \.id) { category in
+                    Picker("Category", selection: $viewModel.selectedCategoryId) {
+                        ForEach(viewModel.categories, id: \.id) { category in
                             Text(category.name).tag(category.id)
                         }
                     }
@@ -71,7 +66,7 @@ struct EditTaskView: View {
     }
 
     private func saveChanges() {
-        guard let newCategory = categories.first(where: { $0.id == selectedCategoryId }) else {
+        guard let newCategory = viewModel.categories.first(where: { $0.id == viewModel.selectedCategoryId }) else {
             dismiss()
             return
         }

@@ -9,19 +9,22 @@ import Combine
 import Foundation
 
 class TaskViewModel: ObservableObject {
-    private let storage = ToDoStorage()
+    private let storage: ToDoStorage
     private var notificationToken: NotificationToken?
     private var categoryToken: NotificationToken?
 
     @Published var todos: [ToDo] = []
     @Published var categories: [Category] = []
+    @Published var showAddTask = false
+    @Published var showAddCategory = false
     @Published var selectedCategory: Category? {
         didSet {
             observeTodos()
         }
     }
 
-    init() {
+    init(toDoStorage: ToDoStorage) {
+        self.storage = toDoStorage
         observeCategories()
     }
 

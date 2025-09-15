@@ -9,22 +9,38 @@ import Combine
 import Foundation
 
 class EditTaskViewModel: ObservableObject {
-    private let storage = ToDoStorage()
+    private let storage: ToDoStorage
     
     @Published var taskTitle: String
     @Published var dueDate: Date
     @Published var isComplete: Bool
     @Published var errorMessage: String = ""
+    @Published var selectedCategoryId: String = ""
+    @Published var categories: [Category] = []
     
     var task: ToDo
 
-    init(task: ToDo) {
+    init(task: ToDo, toDoStorage: ToDoStorage) {
         self.task = task
+        self.storage = toDoStorage
         self.taskTitle = task.task
         self.dueDate = task.dueDate ?? Date()
         self.isComplete = task.isComplete
+        
+        loadCategories()
     }
 
+    private func loadCategories() {
+           do {
+               let realm = try Realm()
+               let allCategories = realm.objects(Category.self)
+               self.categories = Array(allCategories)
+               self.selectedCategoryId = task.category?.id ?? allCategories.first?.id ?? ""
+           } catch {
+               self.errorMessage = "Failed to load categories: \(error.localizedDescription)"
+           }
+       }
+    
     func saveChanges() {
         do {
             let realm = try Realm()

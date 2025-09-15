@@ -8,7 +8,10 @@ import SwiftUI
 
 struct AddTaskView: View {
     @Environment(\.dismiss) var dismiss
-    @ObservedObject var viewModel: AddTaskViewModel
+    @StateObject private var viewModel: AddTaskViewModel
+    init(viewModel: AddTaskViewModel) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+    }
     
     var body: some View {
         NavigationView {

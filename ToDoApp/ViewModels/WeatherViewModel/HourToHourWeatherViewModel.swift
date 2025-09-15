@@ -6,14 +6,17 @@
 //
 import SwiftUI
 
-@MainActor
 class HourToHourWeatherViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     
     @Published var hourlyForecast: [HourlyWeather] = []
     
-    private let weatherService = WeatherService()
+    private let weatherService: WeatherService
+    
+    init(weatherService: WeatherService) {
+        self.weatherService = weatherService
+    }
     
     func getHourToHourWeather(for location: String) {
         errorMessage = nil
@@ -22,6 +25,12 @@ class HourToHourWeatherViewModel: ObservableObject {
         Task {
             do {
                 let hourlyWeather = try await weatherService.fetchWeather(for: location)
+                
+                // Debug: Print the first hour's condition data
+                if let firstHour = hourlyWeather.forecast.forecastday.first?.hour.first {
+                    print("🌤️ HourToHourWeatherViewModel: First hour condition text: \(firstHour.condition.text)")
+                    print("🌤️ HourToHourWeatherViewModel: First hour condition icon: \(firstHour.condition.icon)")
+                }
                 
                 hourlyForecast = hourlyWeather.forecast.forecastday.first?.hour ?? []
             } catch {
@@ -40,22 +49,5 @@ class HourToHourWeatherViewModel: ObservableObject {
         }
         return "--"
     }
-    func getSFIconName(for condition: String) -> String {
-        let lower = condition.lowercased()
-        
-        if lower.contains("sun") {
-            return "sun.max.fill"
-        } else if lower.contains("cloud") {
-            return "cloud.fill"
-        } else if lower.contains("rain") {
-            return "cloud.rain.fill"
-        } else if lower.contains("snow") {
-            return "snowflake"
-        } else if lower.contains("clear"){
-            return "moon.stars.fill"
-        }
-        else {
-            return "questionmark"
-        }
-    }
+    
 }

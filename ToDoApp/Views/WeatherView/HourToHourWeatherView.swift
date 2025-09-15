@@ -7,8 +7,10 @@
 import SwiftUI
 
 struct HourToHourWeatherView: View {
-    @StateObject private var hourlyViewModel = HourToHourWeatherViewModel()
-    
+    @StateObject private var hourlyViewModel: HourToHourWeatherViewModel
+    init(hourlyViewModel: HourToHourWeatherViewModel) {
+        self._hourlyViewModel = StateObject(wrappedValue: hourlyViewModel)
+    }
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
@@ -18,11 +20,14 @@ struct HourToHourWeatherView: View {
                         Text(hourlyViewModel.formattedHour(from: hour.time))
                             .font(.system(size: 23))
                             .foregroundColor(.white)
-                        Image(systemName: hourlyViewModel.getSFIconName(for: hour.condition.text))
-                            .renderingMode(.original)
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .foregroundColor(.white)
+                        
+                        WeatherIconView(
+                            iconURL: hour.condition.icon,
+                            size: 50,
+                            fallbackIcon: "questionmark",
+                            conditionText: hour.condition.text
+                        )
+                        
                         Text("\(Int(hour.tempC))°C")
                             .font(.system(size: 23))
                             .foregroundColor(.white)
