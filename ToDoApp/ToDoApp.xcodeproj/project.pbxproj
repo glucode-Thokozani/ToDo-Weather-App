@@ -17,6 +17,9 @@
 		F456E1432E78A907001811F6 /* BackgroundViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F456E1422E78A900001811F6 /* BackgroundViewModel.swift */; };
 		F45717A72E586D6B00126854 /* SwiftUIPager in Frameworks */ = {isa = PBXBuildFile; productRef = F45717A62E586D6B00126854 /* SwiftUIPager */; };
 		F462853B2E58407B000945A2 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F462853A2E58407B000945A2 /* RealmSwift */; };
+		F46955F02E795ADB00E8EE79 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46955EF2E795ADB00E8EE79 /* WidgetKit.framework */; };
+		F46955F22E795ADB00E8EE79 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46955F12E795ADB00E8EE79 /* SwiftUI.framework */; };
+		F46956012E795AE100E8EE79 /* ToDoAppWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F46955ED2E795ADB00E8EE79 /* ToDoAppWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F47D1D722E5C768900B4764C /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47D1D702E5C768900B4764C /* WeatherView.swift */; };
 		F47D1D732E5C768900B4764C /* DayToDayWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47D1D6B2E5C768900B4764C /* DayToDayWeatherView.swift */; };
 		F47D1D742E5C768900B4764C /* HourToHourWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47D1D6C2E5C768900B4764C /* HourToHourWeatherView.swift */; };
@@ -27,6 +30,19 @@
 		F47D1DB82E5C843500B4764C /* WeatherForecastModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47D1D862E5C7C1A00B4764C /* WeatherForecastModel.swift */; };
 		F47D1DB92E5C852400B4764C /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47D1DB72E5C838700B4764C /* WeatherViewModel.swift */; };
 		F47D1DBD2E5C860100B4764C /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47D1D942E5C7F1500B4764C /* WeatherService.swift */; };
+		F4AFAAED2E7AA29E0022CFBB /* CategoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AFAAE92E7AA29E0022CFBB /* CategoryRepository.swift */; };
+		F4AFAAEE2E7AA29E0022CFBB /* RealmStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AFAAEA2E7AA29E0022CFBB /* RealmStorage.swift */; };
+		F4AFAAEF2E7AA29E0022CFBB /* ToDoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AFAAEB2E7AA29E0022CFBB /* ToDoRepository.swift */; };
+		F4AFAAF72E7AA3330022CFBB /* AddCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AFAAF12E7AA3330022CFBB /* AddCategoryView.swift */; };
+		F4AFAAF82E7AA3330022CFBB /* GreetingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AFAAF42E7AA3330022CFBB /* GreetingView.swift */; };
+		F4AFAAF92E7AA3330022CFBB /* CategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AFAAF32E7AA3330022CFBB /* CategoriesView.swift */; };
+		F4AFAAFA2E7AA3330022CFBB /* AddCategoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AFAAF02E7AA3330022CFBB /* AddCategoryButton.swift */; };
+		F4AFAAFB2E7AA3330022CFBB /* AddTaskButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AFAAF22E7AA3330022CFBB /* AddTaskButton.swift */; };
+		F4AFAAFC2E7AA3330022CFBB /* UserTasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AFAAF52E7AA3330022CFBB /* UserTasksView.swift */; };
+		F4AFAB022E7AA3470022CFBB /* MainWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AFAAFE2E7AA3470022CFBB /* MainWeatherView.swift */; };
+		F4AFAB032E7AA3470022CFBB /* WeatherLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AFAAFF2E7AA3470022CFBB /* WeatherLocationView.swift */; };
+		F4AFAB042E7AA3470022CFBB /* WeatherPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AFAB002E7AA3470022CFBB /* WeatherPickerView.swift */; };
+		F4AFAB052E7AA3470022CFBB /* AstronomyScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AFAAFD2E7AA3470022CFBB /* AstronomyScrollView.swift */; };
 		F4D7D41D2E6EA8DB006382F7 /* WeatherIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D7D41C2E6EA8CE006382F7 /* WeatherIconView.swift */; };
 		F4D7D4212E6EB13E006382F7 /* WeatherIconViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D7D4202E6EB10A006382F7 /* WeatherIconViewModel.swift */; };
 		F4FAC47E2E5F26BD0001C525 /* ToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FAC47D2E5F26B30001C525 /* ToDo.swift */; };
@@ -34,6 +50,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		F46955FF2E795AE100E8EE79 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F4AE89182E5462570082ADC4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F46955EC2E795ADB00E8EE79;
+			remoteInfo = ToDoAppWidgetExtension;
+		};
 		F4AE892E2E5462610082ADC4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F4AE89182E5462570082ADC4 /* Project object */;
@@ -50,10 +73,27 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		F46956022E795AE100E8EE79 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				F46956012E795AE100E8EE79 /* ToDoAppWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		F44892162E65C80400C150D6 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		F456E1402E78A8DB001811F6 /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		F456E1422E78A900001811F6 /* BackgroundViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundViewModel.swift; sourceTree = "<group>"; };
+		F46955ED2E795ADB00E8EE79 /* ToDoAppWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ToDoAppWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F46955EF2E795ADB00E8EE79 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		F46955F12E795ADB00E8EE79 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		F47D1D6B2E5C768900B4764C /* DayToDayWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayToDayWeatherView.swift; sourceTree = "<group>"; };
 		F47D1D6C2E5C768900B4764C /* HourToHourWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourToHourWeatherView.swift; sourceTree = "<group>"; };
 		F47D1D6D2E5C768900B4764C /* TasksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksView.swift; sourceTree = "<group>"; };
@@ -71,13 +111,44 @@
 		F4AE89202E5462570082ADC4 /* ToDoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4AE892D2E5462610082ADC4 /* ToDoAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToDoAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4AE89372E5462610082ADC4 /* ToDoAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToDoAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4AFAAE92E7AA29E0022CFBB /* CategoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRepository.swift; sourceTree = "<group>"; };
+		F4AFAAEA2E7AA29E0022CFBB /* RealmStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmStorage.swift; sourceTree = "<group>"; };
+		F4AFAAEB2E7AA29E0022CFBB /* ToDoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoRepository.swift; sourceTree = "<group>"; };
+		F4AFAAF02E7AA3330022CFBB /* AddCategoryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryButton.swift; sourceTree = "<group>"; };
+		F4AFAAF12E7AA3330022CFBB /* AddCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryView.swift; sourceTree = "<group>"; };
+		F4AFAAF22E7AA3330022CFBB /* AddTaskButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskButton.swift; sourceTree = "<group>"; };
+		F4AFAAF32E7AA3330022CFBB /* CategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesView.swift; sourceTree = "<group>"; };
+		F4AFAAF42E7AA3330022CFBB /* GreetingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingView.swift; sourceTree = "<group>"; };
+		F4AFAAF52E7AA3330022CFBB /* UserTasksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTasksView.swift; sourceTree = "<group>"; };
+		F4AFAAFD2E7AA3470022CFBB /* AstronomyScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AstronomyScrollView.swift; sourceTree = "<group>"; };
+		F4AFAAFE2E7AA3470022CFBB /* MainWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWeatherView.swift; sourceTree = "<group>"; };
+		F4AFAAFF2E7AA3470022CFBB /* WeatherLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherLocationView.swift; sourceTree = "<group>"; };
+		F4AFAB002E7AA3470022CFBB /* WeatherPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherPickerView.swift; sourceTree = "<group>"; };
 		F4D7D41C2E6EA8CE006382F7 /* WeatherIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherIconView.swift; sourceTree = "<group>"; };
 		F4D7D4202E6EB10A006382F7 /* WeatherIconViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherIconViewModel.swift; sourceTree = "<group>"; };
 		F4FAC47D2E5F26B30001C525 /* ToDo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDo.swift; sourceTree = "<group>"; };
 		F4FAC47F2E5F27480001C525 /* ToDoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoStorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		F46956052E795AE100E8EE79 /* Exceptions for "ToDoAppWidget" folder in "ToDoAppWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = F46955EC2E795ADB00E8EE79 /* ToDoAppWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		F46955F32E795ADB00E8EE79 /* ToDoAppWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				F46956052E795AE100E8EE79 /* Exceptions for "ToDoAppWidget" folder in "ToDoAppWidgetExtension" target */,
+			);
+			path = ToDoAppWidget;
+			sourceTree = "<group>";
+		};
 		F4AE89222E5462570082ADC4 /* ToDoApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = ToDoApp;
@@ -96,6 +167,15 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F46955EA2E795ADB00E8EE79 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F46955F22E795ADB00E8EE79 /* SwiftUI.framework in Frameworks */,
+				F46955F02E795ADB00E8EE79 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F4AE891D2E5462570082ADC4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -131,6 +211,15 @@
 			path = Dependencies;
 			sourceTree = "<group>";
 		};
+		F46955EE2E795ADB00E8EE79 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F46955EF2E795ADB00E8EE79 /* WidgetKit.framework */,
+				F46955F12E795ADB00E8EE79 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F47D1D7E2E5C76BA00B4764C /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -148,6 +237,7 @@
 				F47D1D6C2E5C768900B4764C /* HourToHourWeatherView.swift */,
 				F47D1D6B2E5C768900B4764C /* DayToDayWeatherView.swift */,
 				F47D1D702E5C768900B4764C /* WeatherView.swift */,
+				F4AFAB012E7AA3470022CFBB /* Components */,
 			);
 			path = WeatherView;
 			sourceTree = "<group>";
@@ -158,6 +248,7 @@
 				F47D1D832E5C777500B4764C /* AddTaskView.swift */,
 				F47D1D812E5C774000B4764C /* EditTaskView.swift */,
 				F47D1D6D2E5C768900B4764C /* TasksView.swift */,
+				F4AFAAF62E7AA3330022CFBB /* Components */,
 			);
 			path = ToDoView;
 			sourceTree = "<group>";
@@ -221,7 +312,10 @@
 				F4AE89222E5462570082ADC4 /* ToDoApp */,
 				F4AE89302E5462610082ADC4 /* ToDoAppTests */,
 				F4AE893A2E5462610082ADC4 /* ToDoAppUITests */,
+				F46955F32E795ADB00E8EE79 /* ToDoAppWidget */,
+				F46955EE2E795ADB00E8EE79 /* Frameworks */,
 				F4AE89212E5462570082ADC4 /* Products */,
+				F4AFAAEC2E7AA29E0022CFBB /* Repositories */,
 			);
 			sourceTree = "<group>";
 		};
@@ -231,8 +325,43 @@
 				F4AE89202E5462570082ADC4 /* ToDoApp.app */,
 				F4AE892D2E5462610082ADC4 /* ToDoAppTests.xctest */,
 				F4AE89372E5462610082ADC4 /* ToDoAppUITests.xctest */,
+				F46955ED2E795ADB00E8EE79 /* ToDoAppWidgetExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		F4AFAAEC2E7AA29E0022CFBB /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				F4AFAAE92E7AA29E0022CFBB /* CategoryRepository.swift */,
+				F4AFAAEA2E7AA29E0022CFBB /* RealmStorage.swift */,
+				F4AFAAEB2E7AA29E0022CFBB /* ToDoRepository.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		F4AFAAF62E7AA3330022CFBB /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				F4AFAAF02E7AA3330022CFBB /* AddCategoryButton.swift */,
+				F4AFAAF12E7AA3330022CFBB /* AddCategoryView.swift */,
+				F4AFAAF22E7AA3330022CFBB /* AddTaskButton.swift */,
+				F4AFAAF32E7AA3330022CFBB /* CategoriesView.swift */,
+				F4AFAAF42E7AA3330022CFBB /* GreetingView.swift */,
+				F4AFAAF52E7AA3330022CFBB /* UserTasksView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		F4AFAB012E7AA3470022CFBB /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				F4AFAAFD2E7AA3470022CFBB /* AstronomyScrollView.swift */,
+				F4AFAAFE2E7AA3470022CFBB /* MainWeatherView.swift */,
+				F4AFAAFF2E7AA3470022CFBB /* WeatherLocationView.swift */,
+				F4AFAB002E7AA3470022CFBB /* WeatherPickerView.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		F4FAC47B2E5F1E600001C525 /* WeatherModel */ = {
@@ -255,6 +384,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		F46955EC2E795ADB00E8EE79 /* ToDoAppWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F46956062E795AE100E8EE79 /* Build configuration list for PBXNativeTarget "ToDoAppWidgetExtension" */;
+			buildPhases = (
+				F46955E92E795ADB00E8EE79 /* Sources */,
+				F46955EA2E795ADB00E8EE79 /* Frameworks */,
+				F46955EB2E795ADB00E8EE79 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				F46955F32E795ADB00E8EE79 /* ToDoAppWidget */,
+			);
+			name = ToDoAppWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = ToDoAppWidgetExtension;
+			productReference = F46955ED2E795ADB00E8EE79 /* ToDoAppWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		F4AE891F2E5462570082ADC4 /* ToDoApp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F4AE89412E5462610082ADC4 /* Build configuration list for PBXNativeTarget "ToDoApp" */;
@@ -262,10 +413,12 @@
 				F4AE891C2E5462570082ADC4 /* Sources */,
 				F4AE891D2E5462570082ADC4 /* Frameworks */,
 				F4AE891E2E5462570082ADC4 /* Resources */,
+				F46956022E795AE100E8EE79 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				F46956002E795AE100E8EE79 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				F4AE89222E5462570082ADC4 /* ToDoApp */,
@@ -336,6 +489,9 @@
 				LastSwiftUpdateCheck = 1640;
 				LastUpgradeCheck = 1640;
 				TargetAttributes = {
+					F46955EC2E795ADB00E8EE79 = {
+						CreatedOnToolsVersion = 16.4;
+					};
 					F4AE891F2E5462570082ADC4 = {
 						CreatedOnToolsVersion = 16.4;
 					};
@@ -371,11 +527,19 @@
 				F4AE891F2E5462570082ADC4 /* ToDoApp */,
 				F4AE892C2E5462610082ADC4 /* ToDoAppTests */,
 				F4AE89362E5462610082ADC4 /* ToDoAppUITests */,
+				F46955EC2E795ADB00E8EE79 /* ToDoAppWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		F46955EB2E795ADB00E8EE79 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F4AE891E2E5462570082ADC4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -400,6 +564,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		F46955E92E795ADB00E8EE79 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F4AE891C2E5462570082ADC4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -409,16 +580,29 @@
 				F47D1DB92E5C852400B4764C /* WeatherViewModel.swift in Sources */,
 				F47D1DBD2E5C860100B4764C /* WeatherService.swift in Sources */,
 				F456E1412E78A8E2001811F6 /* BackgroundView.swift in Sources */,
+				F4AFAAF72E7AA3330022CFBB /* AddCategoryView.swift in Sources */,
+				F4AFAAF82E7AA3330022CFBB /* GreetingView.swift in Sources */,
+				F4AFAAF92E7AA3330022CFBB /* CategoriesView.swift in Sources */,
+				F4AFAAFA2E7AA3330022CFBB /* AddCategoryButton.swift in Sources */,
+				F4AFAAFB2E7AA3330022CFBB /* AddTaskButton.swift in Sources */,
+				F4AFAAFC2E7AA3330022CFBB /* UserTasksView.swift in Sources */,
 				F44244D92E60844700D33D2E /* DayToDayViewModel.swift in Sources */,
 				F4FAC4802E5F27510001C525 /* ToDoStorage.swift in Sources */,
 				F4081CB22E61C852004C55C7 /* AddTaskViewModel.swift in Sources */,
 				F44244D82E6050CB00D33D2E /* HourToHourWeatherViewModel.swift in Sources */,
+				F4AFAB022E7AA3470022CFBB /* MainWeatherView.swift in Sources */,
+				F4AFAB032E7AA3470022CFBB /* WeatherLocationView.swift in Sources */,
+				F4AFAB042E7AA3470022CFBB /* WeatherPickerView.swift in Sources */,
+				F4AFAB052E7AA3470022CFBB /* AstronomyScrollView.swift in Sources */,
 				F4FAC47E2E5F26BD0001C525 /* ToDo.swift in Sources */,
 				F4081CB12E61C84C004C55C7 /* EditTaskViewModel.swift in Sources */,
 				F4D7D4212E6EB13E006382F7 /* WeatherIconViewModel.swift in Sources */,
 				F47D1D732E5C768900B4764C /* DayToDayWeatherView.swift in Sources */,
 				F47D1D842E5C778100B4764C /* AddTaskView.swift in Sources */,
 				F47D1D822E5C774800B4764C /* EditTaskView.swift in Sources */,
+				F4AFAAED2E7AA29E0022CFBB /* CategoryRepository.swift in Sources */,
+				F4AFAAEE2E7AA29E0022CFBB /* RealmStorage.swift in Sources */,
+				F4AFAAEF2E7AA29E0022CFBB /* ToDoRepository.swift in Sources */,
 				F47D1DB82E5C843500B4764C /* WeatherForecastModel.swift in Sources */,
 				F47D1D742E5C768900B4764C /* HourToHourWeatherView.swift in Sources */,
 				F47D1D752E5C768900B4764C /* TasksView.swift in Sources */,
@@ -445,6 +629,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		F46956002E795AE100E8EE79 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F46955EC2E795ADB00E8EE79 /* ToDoAppWidgetExtension */;
+			targetProxy = F46955FF2E795AE100E8EE79 /* PBXContainerItemProxy */;
+		};
 		F4AE892F2E5462610082ADC4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F4AE891F2E5462570082ADC4 /* ToDoApp */;
@@ -458,6 +647,58 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		F46956032E795AE100E8EE79 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ToDoAppWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ToDoAppWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = private.ToDoApp.ToDoAppWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F46956042E795AE100E8EE79 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ToDoAppWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ToDoAppWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = private.ToDoApp.ToDoAppWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		F4AE893F2E5462610082ADC4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -702,6 +943,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F46956062E795AE100E8EE79 /* Build configuration list for PBXNativeTarget "ToDoAppWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F46956032E795AE100E8EE79 /* Debug */,
+				F46956042E795AE100E8EE79 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F4AE891B2E5462570082ADC4 /* Build configuration list for PBXProject "ToDoApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

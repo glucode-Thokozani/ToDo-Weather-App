@@ -205,13 +205,11 @@ struct RainEffect: View {
                 let time = timeline.date.timeIntervalSinceReferenceDate
                 
                 for drop in drops {
-                    // Calculate current Y based on time
                     let distance = CGFloat(time).truncatingRemainder(dividingBy: 10) * drop.speed
                     let y = (distance).truncatingRemainder(dividingBy: size.height + drop.length) - drop.length
                     let x = drop.x * size.width
                     let rect = CGRect(x: x, y: y, width: 1.2, height: drop.length)
                     
-                    // Add motion blur gradient
                     let gradient = Gradient(stops: [
                         .init(color: .white.opacity(0.0), location: 0.0),
                         .init(color: .white.opacity(drop.opacity), location: 1.0)
@@ -233,10 +231,9 @@ struct RainEffect: View {
     }
 }
 
-// Simple raindrop data (no @State needed)
 struct DropData {
-    var x: CGFloat        // x position (normalized 0–1)
-    var speed: CGFloat    // points per second
+    var x: CGFloat
+    var speed: CGFloat
     var length: CGFloat
     var opacity: Double
 }

@@ -24,7 +24,7 @@ class HourToHourWeatherViewModel: ObservableObject {
         
         Task {
             do {
-                let hourlyWeather = try await weatherService.fetchWeather(for: location)
+                let hourlyWeather = try await weatherService.fetchWeather(for: location, days: 3)
                 
                 // Debug: Print the first hour's condition data
                 if let firstHour = hourlyWeather.forecast.forecastday.first?.hour.first {

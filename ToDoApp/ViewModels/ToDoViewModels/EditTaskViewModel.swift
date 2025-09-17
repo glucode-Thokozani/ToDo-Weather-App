@@ -31,27 +31,16 @@ class EditTaskViewModel: ObservableObject {
     }
 
     private func loadCategories() {
-           do {
-               let realm = try Realm()
-               let allCategories = realm.objects(Category.self)
-               self.categories = Array(allCategories)
-               self.selectedCategoryId = task.category?.id ?? allCategories.first?.id ?? ""
-           } catch {
-               self.errorMessage = "Failed to load categories: \(error.localizedDescription)"
-           }
-       }
+        let allCategories = storage.readCategories()
+        self.categories = Array(allCategories)
+        self.selectedCategoryId = task.category?.id ?? allCategories.first?.id ?? ""
+    }
     
     func saveChanges() {
-        do {
-            let realm = try Realm()
-            try realm.write {
-                task.task = taskTitle
-                task.dueDate = dueDate
-                task.isComplete = isComplete
-            }
-        } catch {
-            errorMessage = "Failed to save changes: \(error.localizedDescription)"
-        }
+        task.task = taskTitle
+        task.dueDate = dueDate
+        task.isComplete = isComplete
+        storage.updateTodo(task)
     }
 
     func deleteTask() {

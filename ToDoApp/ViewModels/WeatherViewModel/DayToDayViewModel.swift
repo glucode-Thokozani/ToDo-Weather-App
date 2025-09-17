@@ -23,9 +23,8 @@ class DayToDayViewModel: ObservableObject {
         isLoading = true
         
         do {
-            let dailyWeather = try await weatherService.fetchWeather(for: location)
+            let dailyWeather = try await weatherService.fetchWeather(for: location, days: 3)
             
-            // Debug: Print the first day's condition data
             if let firstDay = dailyWeather.forecast.forecastday.first {
                 print("🌤️ DayToDayViewModel: First day condition text: \(firstDay.day.condition.text)")
                 print("🌤️ DayToDayViewModel: First day condition icon: \(firstDay.day.condition.icon)")

@@ -7,7 +7,43 @@
 import RealmSwift
 import UIKit
 
-class ToDoStorage {
+// MARK: - Storage Protocol
+protocol StorageProtocol {
+    func save<T: Object>(_ object: T) throws
+    func fetch<T: Object>(_ type: T.Type) -> Results<T>
+    func delete<T: Object>(_ object: T) throws
+    func update<T: Object>(_ object: T) throws
+}
+
+// MARK: - Repository Protocols
+protocol ToDoRepositoryProtocol {
+    func addTodo(to category: Category, todo: ToDo)
+    func readTodo(for category: Category) -> Results<ToDo>
+    func updateTodo(_ todo: ToDo)
+    func delete(todo: ToDo)
+    func toggleCompletion(for todo: ToDo)
+}
+
+protocol CategoryRepositoryProtocol {
+    func addCategory(name: String)
+    func readCategories() -> Results<Category>
+    func delete(category: Category)
+    func addCategoryObject(_ category: Category)
+}
+
+// MARK: - Dependency Protocols
+protocol WeatherDependencies {
+    var weatherService: WeatherServiceProtocol { get }
+}
+
+protocol ToDoDependencies {
+    var toDoRepository: ToDoRepositoryProtocol { get }
+    var categoryRepository: CategoryRepositoryProtocol { get }
+}
+
+protocol AppDependencies: WeatherDependencies, ToDoDependencies {}
+
+class ToDoStorage: StorageProtocol, ToDoRepositoryProtocol, CategoryRepositoryProtocol {
     private let realm: Realm
     
     init() {
@@ -96,6 +132,29 @@ class ToDoStorage {
             }
         } catch {
             print("Error adding Category: \(error)")
+        }
+    }
+    
+    // MARK: - StorageProtocol Implementation
+    func save<T: Object>(_ object: T) throws {
+        try realm.write {
+            realm.add(object)
+        }
+    }
+    
+    func fetch<T: Object>(_ type: T.Type) -> Results<T> {
+        return realm.objects(type)
+    }
+    
+    func delete<T: Object>(_ object: T) throws {
+        try realm.write {
+            realm.delete(object)
+        }
+    }
+    
+    func update<T: Object>(_ object: T) throws {
+        try realm.write {
+            realm.add(object, update: .modified)
         }
     }
 }

@@ -6,7 +6,6 @@
 //
 import SwiftUI
 
-// Updated DayToDayWeatherView
 struct DayToDayWeatherView: View {
     @StateObject private var dailyViewModel: DayToDayViewModel
     init(dailyViewModel: DayToDayViewModel) {

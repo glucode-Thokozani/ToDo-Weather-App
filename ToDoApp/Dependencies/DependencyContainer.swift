@@ -5,18 +5,19 @@
 //  Created by Thokozani Mncube on 2025/09/01.
 //
 import SwiftUI
+import RealmSwift
 
 final class DependencyContainer {
     static let shared = DependencyContainer()
     
     private init() {}
     
-    private lazy var weatherService: WeatherService = {
-        WeatherService()
+    lazy var storage: ToDoStorage = {
+        ToDoStorage()
     }()
     
-    private lazy var toDoStorage: ToDoStorage = {
-        ToDoStorage()
+    lazy var weatherService: WeatherService = {
+        WeatherService()
     }()
     
     public var weatherContainer: WeatherDependencyContainer {
@@ -25,14 +26,6 @@ final class DependencyContainer {
 
     public var toDoContainer: ToDoDependencyContainer {
         ToDoDependencyContainer(dependencyContainer: self)
-    }
-    
-    func getWeatherService() -> WeatherService {
-        return weatherService
-    }
-    
-    func getToDoStorage() -> ToDoStorage {
-        return toDoStorage
     }
 }
 
@@ -69,15 +62,15 @@ final class WeatherDependencyContainer {
     }
     
     public var weatherViewModel: WeatherViewModel {
-        WeatherViewModel(weatherService: dependencyContainer.getWeatherService())
+        WeatherViewModel(weatherService: dependencyContainer.weatherService)
     }
     
     public var dayToDayWeatherViewModel: DayToDayViewModel {
-        DayToDayViewModel(weatherService: dependencyContainer.getWeatherService())
+        DayToDayViewModel(weatherService: dependencyContainer.weatherService)
     }
     
     public var hourToHourWeatherViewModel: HourToHourWeatherViewModel {
-        HourToHourWeatherViewModel(weatherService: dependencyContainer.getWeatherService())
+        HourToHourWeatherViewModel(weatherService: dependencyContainer.weatherService)
     }
 }
 
@@ -105,14 +98,14 @@ final class ToDoDependencyContainer {
     }
     
     public var taskViewModel: TaskViewModel {
-        TaskViewModel(toDoStorage: dependencyContainer.getToDoStorage())
+        TaskViewModel(toDoStorage: dependencyContainer.storage)
     }
     
     public func editTaskViewModel(for task: ToDo) -> EditTaskViewModel {
-        EditTaskViewModel(task: task, toDoStorage: dependencyContainer.getToDoStorage())
+        EditTaskViewModel(task: task, toDoStorage: dependencyContainer.storage)
     }
     
     public func addTaskViewModel(for category: Category) -> AddTaskViewModel {
-        AddTaskViewModel(category: category, toDoStorage: dependencyContainer.getToDoStorage())
+        AddTaskViewModel(category: category, toDoStorage: dependencyContainer.storage)
     }
 }

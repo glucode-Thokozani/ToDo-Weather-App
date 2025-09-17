@@ -27,9 +27,9 @@ class WeatherViewModel: ObservableObject {
         
         Task {
             do {
-                let weather = try await weatherService.fetchWeather(for: location)
+                let weather = try await weatherService.fetchWeather(for: location, days: 3)
                 
-                cityName = "\(weather.location.name), \(weather.location.region)"
+                cityName = "\(weather.location.name)"
                 currentTemperature = Int(weather.current.tempC)
                 currentCondition = weather.current.condition
                 astronomy = weather.forecast.forecastday.first?.astro

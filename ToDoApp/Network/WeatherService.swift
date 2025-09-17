@@ -7,6 +7,28 @@
 
 import Foundation
 
+// MARK: - Weather Service Protocol
+protocol WeatherServiceProtocol {
+    func fetchWeather(for location: String, days: Int) async throws -> WeatherForecastModel
+}
+
+enum WeatherServiceError: Error, LocalizedError {
+    case invalidURL
+    case invalidResponse
+    case decodingFailed(Error)
+    
+    var errorDescription: String? {
+        switch self {
+        case .invalidURL:
+            return "Invalid URL."
+        case .invalidResponse:
+            return "Invalid response from the server."
+        case .decodingFailed(let error):
+            return "Failed to decode weather data: \(error.localizedDescription)"
+        }
+    }
+}
+
 class WeatherService {
     private let apiKey = ProcessInfo.processInfo.environment["Weather_Api_Key"]
     private let baseURL = "https://api.weatherapi.com/v1/forecast.json"
@@ -45,19 +67,3 @@ class WeatherService {
     }
 }
 
-enum WeatherServiceError: Error, LocalizedError {
-    case invalidURL
-    case invalidResponse
-    case decodingFailed(Error)
-    
-    var errorDescription: String? {
-        switch self {
-        case .invalidURL:
-            return "Invalid URL."
-        case .invalidResponse:
-            return "Invalid response from the server."
-        case .decodingFailed(let error):
-            return "Failed to decode weather data: \(error.localizedDescription)"
-        }
-    }
-}

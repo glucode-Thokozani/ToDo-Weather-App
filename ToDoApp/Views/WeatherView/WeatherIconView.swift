@@ -48,7 +48,6 @@ struct WeatherIconView: View {
     }
     
     private func loadImage() {
-        print("🌤️ WeatherIconView: Loading icon from URL: \(iconURL)")
         
         let fullURL: String
         if iconURL.hasPrefix("http://") || iconURL.hasPrefix("https://") {
@@ -62,7 +61,6 @@ struct WeatherIconView: View {
         }
         
         guard let url = URL(string: fullURL) else {
-            print("❌ WeatherIconView: Invalid URL: \(fullURL)")
             isLoading = false
             return
         }
@@ -75,24 +73,24 @@ struct WeatherIconView: View {
         URLSession.shared.dataTask(with: request) { data, response, error in
             DispatchQueue.main.async {
                 if let error = error {
-                    print("❌ WeatherIconView: Error loading image: \(error.localizedDescription)")
+                    print("WeatherIconView: Error loading image: \(error.localizedDescription)")
                 } else if let httpResponse = response as? HTTPURLResponse {
-                    print("🌤️ WeatherIconView: HTTP Status: \(httpResponse.statusCode)")
+                    print("WeatherIconView: HTTP Status: \(httpResponse.statusCode)")
                     if httpResponse.statusCode != 200 {
-                        print("❌ WeatherIconView: HTTP Error - Status: \(httpResponse.statusCode)")
+                        print("WeatherIconView: HTTP Error - Status: \(httpResponse.statusCode)")
                     }
                 }
                 
                 if let data = data {
                     print("🌤️ WeatherIconView: Received \(data.count) bytes of data")
                     if let uiImage = UIImage(data: data) {
-                        print("✅ WeatherIconView: Successfully loaded image")
+                        print("WeatherIconView: Successfully loaded image")
                         self.image = uiImage
                     } else {
-                        print("❌ WeatherIconView: Failed to create UIImage from data")
+                        print("WeatherIconView: Failed to create UIImage from data")
                     }
                 } else {
-                    print("❌ WeatherIconView: No data received")
+                    print("WeatherIconView: No data received")
                 }
                 self.isLoading = false
             }
