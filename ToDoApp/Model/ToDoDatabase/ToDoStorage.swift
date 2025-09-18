@@ -7,7 +7,6 @@
 import RealmSwift
 import UIKit
 
-// MARK: - Storage Protocol
 protocol StorageProtocol {
     func save<T: Object>(_ object: T) throws
     func fetch<T: Object>(_ type: T.Type) -> Results<T>
@@ -15,7 +14,6 @@ protocol StorageProtocol {
     func update<T: Object>(_ object: T) throws
 }
 
-// MARK: - Repository Protocols
 protocol ToDoRepositoryProtocol {
     func addTodo(to category: Category, todo: ToDo)
     func readTodo(for category: Category) -> Results<ToDo>
@@ -31,7 +29,6 @@ protocol CategoryRepositoryProtocol {
     func addCategoryObject(_ category: Category)
 }
 
-// MARK: - Dependency Protocols
 protocol WeatherDependencies {
     var weatherService: WeatherServiceProtocol { get }
 }

@@ -32,7 +32,6 @@ class CategoryRepository: CategoryRepositoryProtocol {
     
     func delete(category: Category) {
         do {
-            // Delete all items in the category first
             for item in category.items {
                 try storage.delete(item)
             }

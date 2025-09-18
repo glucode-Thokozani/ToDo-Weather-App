@@ -7,7 +7,6 @@
 
 import Foundation
 
-// MARK: - Weather Service Protocol
 protocol WeatherServiceProtocol {
     func fetchWeather(for location: String, days: Int) async throws -> WeatherForecastModel
 }

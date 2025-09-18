@@ -65,32 +65,17 @@ struct WeatherIconView: View {
             return
         }
         
-        print("🌤️ WeatherIconView: Final URL: \(url)")
         var request = URLRequest(url: url)
         request.setValue("image/*", forHTTPHeaderField: "Accept")
         request.timeoutInterval = 10.0
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             DispatchQueue.main.async {
-                if let error = error {
-                    print("WeatherIconView: Error loading image: \(error.localizedDescription)")
-                } else if let httpResponse = response as? HTTPURLResponse {
-                    print("WeatherIconView: HTTP Status: \(httpResponse.statusCode)")
-                    if httpResponse.statusCode != 200 {
-                        print("WeatherIconView: HTTP Error - Status: \(httpResponse.statusCode)")
-                    }
-                }
-                
                 if let data = data {
-                    print("🌤️ WeatherIconView: Received \(data.count) bytes of data")
                     if let uiImage = UIImage(data: data) {
-                        print("WeatherIconView: Successfully loaded image")
+                        
                         self.image = uiImage
-                    } else {
-                        print("WeatherIconView: Failed to create UIImage from data")
                     }
-                } else {
-                    print("WeatherIconView: No data received")
                 }
                 self.isLoading = false
             }
