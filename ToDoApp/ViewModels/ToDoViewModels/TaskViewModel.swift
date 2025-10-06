@@ -10,9 +10,13 @@ import Foundation
 
 class TaskViewModel: ObservableObject {
     private let storage: ToDoStorage
+    var toDoStorage: ToDoStorage {
+        return storage
+    }
     private var notificationToken: NotificationToken?
     private var categoryToken: NotificationToken?
-
+    
+    @Published var errorMessage: String? = nil
     @Published var todos: [ToDo] = []
     @Published var categories: [Category] = []
     @Published var showAddTask = false
@@ -22,12 +26,12 @@ class TaskViewModel: ObservableObject {
             observeTodos()
         }
     }
-
+    
     init(toDoStorage: ToDoStorage) {
         self.storage = toDoStorage
         observeCategories()
     }
-
+    
     private func observeCategories() {
         let results = storage.readCategories()
         categoryToken?.invalidate()
@@ -42,17 +46,17 @@ class TaskViewModel: ObservableObject {
             }
         }
     }
-
+    
     private func observeTodos() {
         notificationToken?.invalidate()
-
+        
         guard let category = selectedCategory else {
             DispatchQueue.main.async {
                 self.todos = []
             }
             return
         }
-
+        
         let results = storage.readTodo(for: category)
         notificationToken = results.observe { [weak self] changes in
             guard let self = self else { return }
@@ -66,21 +70,33 @@ class TaskViewModel: ObservableObject {
             }
         }
     }
-
+    
     func toggleTaskCompletion(_ todo: ToDo) {
-        storage.toggleCompletion(for: todo)
+        do {
+            try storage.toggleCompletion(for: todo)
+        } catch {
+            errorMessage = "Failed to update Task"
+        }
     }
-
+    
     func deleteTask(_ todo: ToDo) {
-        storage.delete(todo: todo)
+        do{
+            try storage.delete(todo: todo)
+        } catch {
+            errorMessage = "Failed to delete task."
+        }
     }
-
+    
     func addCategory(name: String) {
         let category = Category()
         category.name = name
-        storage.addCategoryObject(category)
+        do {
+            try storage.addCategoryObject(category)
+        } catch {
+            errorMessage = "Failed to add new category"
+        }
     }
-
+    
     deinit {
         notificationToken?.invalidate()
         categoryToken?.invalidate()

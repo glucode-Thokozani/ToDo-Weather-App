@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import RealmSwift
 
 struct CategoriesView: View {
     var categories: [Category]

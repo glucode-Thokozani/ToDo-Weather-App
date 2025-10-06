@@ -15,18 +15,18 @@ protocol StorageProtocol {
 }
 
 protocol ToDoRepositoryProtocol {
-    func addTodo(to category: Category, todo: ToDo)
+    func addTodo(to category: Category, todo: ToDo) throws
     func readTodo(for category: Category) -> Results<ToDo>
-    func updateTodo(_ todo: ToDo)
-    func delete(todo: ToDo)
-    func toggleCompletion(for todo: ToDo)
+    func updateTodo(_ todo: ToDo) throws
+    func delete(todo: ToDo) throws
+    func toggleCompletion(for todo: ToDo) throws
 }
 
 protocol CategoryRepositoryProtocol {
-    func addCategory(name: String)
+    func addCategory(name: String) throws
     func readCategories() -> Results<Category>
-    func delete(category: Category)
-    func addCategoryObject(_ category: Category)
+    func delete(category: Category) throws
+    func addCategoryObject(_ category: Category) throws
 }
 
 protocol WeatherDependencies {
@@ -51,88 +51,61 @@ class ToDoStorage: StorageProtocol, ToDoRepositoryProtocol, CategoryRepositoryPr
         }
     }
     
-    func addTodo(to category: Category, todo: ToDo) {
-        do {
+    func addTodo(to category: Category, todo: ToDo) throws {
             try realm.write {
                 category.items.append(todo)
             }
-        } catch {
-            print("An error occurred while saving the Task: \(error)")
-        }
     }
     
     func readTodo(for category: Category) -> Results<ToDo> {
         return category.items.sorted(byKeyPath: "dueDate", ascending: true)
     }
     
-    func updateTodo(_ todo: ToDo) {
-        do {
+    func updateTodo(_ todo: ToDo) throws {
             try realm.write {
                 realm.add(todo, update: .modified)
             }
-        } catch {
-            print("An error occurred while updating the task: \(error)")
-        }
     }
     
-    func delete(todo: ToDo) {
-        do {
+    func delete(todo: ToDo) throws {
             try realm.write {
                 realm.delete(todo)
             }
-        } catch {
-            print("An error occurred while deleting the task: \(error)")
-        }
+        
     }
     
-    func addCategory(name: String) {
+    func addCategory(name: String) throws {
         let category = Category()
         category.name = name
         
-        do {
             try realm.write {
                 realm.add(category)
             }
-        } catch {
-            print("Error adding Category: \(error)")
-        }
     }
     
     func readCategories() -> Results<Category> {
         return realm.objects(Category.self).sorted(byKeyPath: "name")
     }
     
-    func delete(category: Category) {
-        do {
+    func delete(category: Category) throws {
             try realm.write {
                 realm.delete(category.items)
                 realm.delete(category)
             }
-        } catch {
-            print("Error deleting Category: \(error)")
-        }
     }
     
-    func toggleCompletion(for todo: ToDo) {
-        do {
+    func toggleCompletion(for todo: ToDo) throws {
             try realm.write {
                 todo.isComplete.toggle()
             }
-        } catch {
-            print("Failed to toggle task completion: \(error)")
-        }
+        
     }
-    func addCategoryObject(_ category: Category) {
-        do {
+    func addCategoryObject(_ category: Category) throws {
             try realm.write {
                 realm.add(category)
             }
-        } catch {
-            print("Error adding Category: \(error)")
-        }
     }
     
-    // MARK: - StorageProtocol Implementation
     func save<T: Object>(_ object: T) throws {
         try realm.write {
             realm.add(object)

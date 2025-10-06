@@ -9,40 +9,34 @@ import SwiftUI
 struct BackgroundView: View {
     @StateObject var backgroundViewModel = BackgroundViewModel()
     
-    var weatherText: ForecastDay? {
-        if backgroundViewModel.dailyForecast.count > 1 {
-            return backgroundViewModel.dailyForecast[1]
-        }
-        return nil
-    }
-    
     var body: some View {
         ZStack {
-            if let weather = weatherText?.day.condition.text {
-                LinearGradient(
-                    gradient: Gradient(colors: backgroundViewModel.gradientFor(weather: weather)),
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-                .ignoresSafeArea()
-
-                if weather.contains("Sunny") {
-                    SunnyEffect()
+            let weatherType = backgroundViewModel.weatherType
+            
+            LinearGradient(
+                gradient: Gradient(colors: backgroundViewModel.gradientFor(weather: backgroundViewModel.currentCondition?.text ?? "")),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
+            
+            switch weatherType {
+            case .sunny:
+                SunnyEffect()
+            case .cloudy:
+                CloudyEffect()
+            case .rain:
+                RainEffect()
+            case .snow:
+                SnowEffect()
+            case .unknown:
+                if backgroundViewModel.isLoading {
+                    ProgressView("Loading weather...")
+                        .foregroundStyle(.white)
+                } else {
+                    Text("Unable to load weather.")
+                        .foregroundStyle(.white)
                 }
-                else if weather.contains("Cloudy") {
-                    CloudyEffect()
-                }
-                else if weather.contains("Rain") {
-                    RainEffect()
-                } else if weather.contains("Snow") {
-                    SnowEffect()
-                }
-            } else if backgroundViewModel.isLoading {
-                ProgressView("Loading weather...")
-                    .foregroundStyle(.white)
-            } else {
-                Text("Unable to load weather.")
-                    .foregroundStyle(.white)
             }
         }
         .onAppear {
@@ -58,14 +52,14 @@ struct SunnyEffect: View {
         TimelineView(.animation) { timeline in
             let time = timeline.date.timeIntervalSinceReferenceDate
             let rotation = Angle.degrees(time.truncatingRemainder(dividingBy: 60) * 6)
-
+            
             Canvas { context, size in
                 let center = CGPoint(x: size.width * 0.85, y: size.height * 0.15)
                 let sunRadius: CGFloat = 45
                 let rayCount = 16
                 let rayInnerRadius = sunRadius + 6
                 let rayOuterRadius = sunRadius + 40
-
+                
                 let glowPath = Path(ellipseIn: CGRect(
                     x: center.x - sunRadius * 2,
                     y: center.y - sunRadius * 2,
@@ -80,7 +74,7 @@ struct SunnyEffect: View {
                     endRadius: sunRadius * 3
                 ))
                 context.addFilter(.blur(radius: 0))
-
+                
                 let sunCircle = Path(ellipseIn: CGRect(
                     x: center.x - sunRadius,
                     y: center.y - sunRadius,
@@ -103,11 +97,11 @@ struct SunnyEffect: View {
                         x: center.x + cos(angle.radians) * rayOuterRadius,
                         y: center.y + sin(angle.radians) * rayOuterRadius
                     )
-
+                    
                     var ray = Path()
                     ray.move(to: start)
                     ray.addLine(to: end)
-
+                    
                     context.stroke(ray, with: .color(Color.white.opacity(0.1)), lineWidth: 5)
                 }
             }
@@ -167,8 +161,9 @@ struct CloudyEffect: View {
                     path = path.applying(transform)
                     
                     let gradient = Gradient(colors: [
-                        Color.white.opacity(0.9),
-                        Color.white.opacity(0.1)
+                        Color.gray.opacity(0.5),
+                        Color.gray.opacity(0.1),
+                        Color.gray.opacity(0.4)
                     ])
                     
                     let rect = path.boundingRect
@@ -182,14 +177,13 @@ struct CloudyEffect: View {
             }
         }
         .ignoresSafeArea()
-        .background(Color.blue.opacity(0.6))
+        .background(Color.gray.opacity(0.6))
     }
 }
 
 struct RainEffect: View {
     let dropCount = 150
     
-    // Precompute raindrop data once
     let drops: [DropData] = (0..<150).map { _ in
         DropData(
             x: CGFloat.random(in: 0...1),
@@ -205,7 +199,7 @@ struct RainEffect: View {
                 let time = timeline.date.timeIntervalSinceReferenceDate
                 
                 for drop in drops {
-                    let distance = CGFloat(time).truncatingRemainder(dividingBy: 10) * drop.speed
+                    let distance = CGFloat(time) * drop.speed
                     let y = (distance).truncatingRemainder(dividingBy: size.height + drop.length) - drop.length
                     let x = drop.x * size.width
                     let rect = CGRect(x: x, y: y, width: 1.2, height: drop.length)
@@ -254,8 +248,5 @@ struct SnowEffect: View {
 }
 
 #Preview {
-    RainEffect()
+    CloudyEffect()
 }
-
-
-

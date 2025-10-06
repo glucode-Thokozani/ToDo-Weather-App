@@ -38,12 +38,12 @@ struct ToDoAppApp: App {
 struct WeatherTasksTabView: View {
     var body: some View {
         TabView {
-            DependencyContainer.shared.weatherContainer.view
+            DependencyContainer.shared.weatherView
                 .tabItem {
                     Image(systemName: "cloud.sun")
                     Text("Weather")
                 }
-            DependencyContainer.shared.toDoContainer.view
+            DependencyContainer.shared.tasksView
                 .tabItem {
                     Image(systemName: "square.and.pencil")
                     Text("Task")
@@ -52,5 +52,3 @@ struct WeatherTasksTabView: View {
         .accentColor(.blue)
     }
 }
-
-

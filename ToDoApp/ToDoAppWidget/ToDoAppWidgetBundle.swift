@@ -14,5 +14,6 @@ struct ToDoAppWidgetBundle: WidgetBundle {
         ToDoAppWidget()
         ToDoAppWidgetControl()
         ToDoAppWidgetLiveActivity()
+        WeatherWidget()
     }
 }

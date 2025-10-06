@@ -16,29 +16,16 @@ final class DependencyContainer {
         ToDoStorage()
     }()
     
-    lazy var weatherService: WeatherService = {
+    lazy var weatherService: WeatherServiceProtocol = {
         WeatherService()
     }()
-    
-    public var weatherContainer: WeatherDependencyContainer {
-        WeatherDependencyContainer(dependencyContainer: self)
-    }
-
-    public var toDoContainer: ToDoDependencyContainer {
-        ToDoDependencyContainer(dependencyContainer: self)
-    }
 }
 
-final class WeatherDependencyContainer {
-    private let dependencyContainer: DependencyContainer
-    
-    init(dependencyContainer: DependencyContainer) {
-        self.dependencyContainer = dependencyContainer
-    }
-    
-    public var view: AnyView {
-        return AnyView(weatherView)
-    }
+protocol WeatherDependencyContainer {
+    var weatherView: WeatherView { get }
+}
+
+extension DependencyContainer: WeatherDependencyContainer {
     
     public var weatherView: WeatherView {
         WeatherView(
@@ -62,28 +49,24 @@ final class WeatherDependencyContainer {
     }
     
     public var weatherViewModel: WeatherViewModel {
-        WeatherViewModel(weatherService: dependencyContainer.weatherService)
+        WeatherViewModel(weatherService: weatherService)
     }
     
     public var dayToDayWeatherViewModel: DayToDayViewModel {
-        DayToDayViewModel(weatherService: dependencyContainer.weatherService)
+        DayToDayViewModel(weatherService: weatherService)
     }
     
     public var hourToHourWeatherViewModel: HourToHourWeatherViewModel {
-        HourToHourWeatherViewModel(weatherService: dependencyContainer.weatherService)
+        HourToHourWeatherViewModel(weatherService: weatherService)
     }
 }
 
-final class ToDoDependencyContainer {
-    private let dependencyContainer: DependencyContainer
-    
-    init(dependencyContainer: DependencyContainer) {
-        self.dependencyContainer = dependencyContainer
-    }
-    
-    public var view: AnyView {
-        return AnyView(tasksView)
-    }
+protocol ToDoDependencyContainer {
+    var tasksView: TasksView { get }
+    func addTaskView(for category: Category) ->AddTaskView
+}
+
+extension DependencyContainer: ToDoDependencyContainer {
     
     public var tasksView: TasksView {
         TasksView(viewModel: taskViewModel, dependencyContainer: self)
@@ -98,14 +81,14 @@ final class ToDoDependencyContainer {
     }
     
     public var taskViewModel: TaskViewModel {
-        TaskViewModel(toDoStorage: dependencyContainer.storage)
+        TaskViewModel(toDoStorage: storage)
     }
     
     public func editTaskViewModel(for task: ToDo) -> EditTaskViewModel {
-        EditTaskViewModel(task: task, toDoStorage: dependencyContainer.storage)
+        EditTaskViewModel(task: task, toDoStorage: storage)
     }
     
     public func addTaskViewModel(for category: Category) -> AddTaskViewModel {
-        AddTaskViewModel(category: category, toDoStorage: dependencyContainer.storage)
+        AddTaskViewModel(category: category, toDoStorage: storage)
     }
 }

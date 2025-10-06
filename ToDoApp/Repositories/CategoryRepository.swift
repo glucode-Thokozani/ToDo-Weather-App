@@ -9,9 +9,9 @@ import Foundation
 import RealmSwift
 
 class CategoryRepository: CategoryRepositoryProtocol {
-    private let storage: StorageProtocol
+    private let storage: ToDoStorage
     
-    init(storage: StorageProtocol) {
+    init(storage: ToDoStorage) {
         self.storage = storage
     }
     

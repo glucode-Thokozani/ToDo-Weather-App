@@ -10,6 +10,8 @@ import RealmSwift
 
 struct TasksView: View {
     @StateObject private var viewModel: TaskViewModel
+    @State private var selectedTaskEdit: ToDo? = nil
+    
     private let dependencyContainer: ToDoDependencyContainer
     
     init(viewModel: TaskViewModel, dependencyContainer: ToDoDependencyContainer) {
@@ -37,7 +39,10 @@ struct TasksView: View {
                 UserTasksView(
                     tasks: viewModel.todos,
                     toggleCompletion: viewModel.toggleTaskCompletion,
-                    deleteTask: viewModel.deleteTask
+                    deleteTask: viewModel.deleteTask,
+                    editTask: { task in      // <-- Added missing comma before this line
+                        selectedTaskEdit = task
+                    }
                 )
             } else {
                 Text("Please select a category")
@@ -58,8 +63,9 @@ struct TasksView: View {
                 }
             }
         }
+        .sheet(item: $selectedTaskEdit) { taskToEdit in
+            let editVM = EditTaskViewModel(task: taskToEdit, toDoStorage: viewModel.toDoStorage)
+            EditTaskView(viewModel: editVM)
+        }
     }
 }
-
-
-

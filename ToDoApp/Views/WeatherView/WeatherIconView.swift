@@ -48,7 +48,6 @@ struct WeatherIconView: View {
     }
     
     private func loadImage() {
-        
         let fullURL: String
         if iconURL.hasPrefix("http://") || iconURL.hasPrefix("https://") {
             fullURL = iconURL
@@ -104,3 +103,4 @@ struct WeatherIconView: View {
         }
     }
 }
+//Y233T

@@ -5,6 +5,7 @@
 //  Created by Thokozani Mncube on 2025/08/25.
 //
 import SwiftUI
+import WidgetKit
 
 class WeatherViewModel: ObservableObject {
     @Published var isLoading: Bool = false
@@ -15,9 +16,9 @@ class WeatherViewModel: ObservableObject {
     @Published var currentCondition: WeatherCondition?
     @Published var astronomy: Astro?
     
-    private let weatherService: WeatherService
+    private let weatherService: WeatherServiceProtocol
     
-    init(weatherService: WeatherService) {
+    init(weatherService: WeatherServiceProtocol) {
         self.weatherService = weatherService
     }
     
@@ -29,23 +30,36 @@ class WeatherViewModel: ObservableObject {
             do {
                 let weather = try await weatherService.fetchWeather(for: location, days: 3)
                 
-                cityName = "\(weather.location.name)"
-                currentTemperature = Int(weather.current.tempC)
-                currentCondition = weather.current.condition
-                astronomy = weather.forecast.forecastday.first?.astro
-                
+                await MainActor.run {
+                    cityName = weather.location.name
+                    currentTemperature = Int(weather.current.tempC)
+                    currentCondition = weather.current.condition
+                    astronomy = weather.forecast.forecastday.first?.astro
+                    
+                    let sharedDefaults = UserDefaults(suiteName: "group.com.TK.ToDoApp")
+                    sharedDefaults?.set(currentTemperature, forKey: "temperature")
+                    sharedDefaults?.set(currentCondition?.text, forKey: "condition")
+                    sharedDefaults?.set(cityName, forKey: "city")
+                    
+                    WidgetCenter.shared.reloadAllTimelines()
+                }
             } catch {
-                errorMessage = error.localizedDescription
-                
-                cityName = ""
-                currentTemperature = 0
-                currentCondition = nil
-                astronomy = nil
+                await MainActor.run {
+                    errorMessage = error.localizedDescription
+                    
+                    cityName = ""
+                    currentTemperature = 0
+                    currentCondition = nil
+                    astronomy = nil
+                }
             }
             
-            isLoading = false
+            await MainActor.run {
+                isLoading = false
+            }
         }
     }
+
 }
 
 

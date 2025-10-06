@@ -12,30 +12,33 @@ class DayToDayViewModel: ObservableObject {
     
     @Published var dailyForecast: [ForecastDay] = []
     
-    private let weatherService: WeatherService
+    private let weatherService: WeatherServiceProtocol
     
-    init(weatherService: WeatherService) {
+    init(weatherService: WeatherServiceProtocol) {
         self.weatherService = weatherService
     }
     
     func getDayToDayWeather(for location: String) async {
-        errorMessage = nil
-        isLoading = true
+        await MainActor.run {
+            errorMessage = nil
+            isLoading = true
+        }
         
         do {
             let dailyWeather = try await weatherService.fetchWeather(for: location, days: 3)
             
-            if let firstDay = dailyWeather.forecast.forecastday.first {
-                print("🌤️ DayToDayViewModel: First day condition text: \(firstDay.day.condition.text)")
-                print("🌤️ DayToDayViewModel: First day condition icon: \(firstDay.day.condition.icon)")
+            await MainActor.run {
+                dailyForecast = dailyWeather.forecast.forecastday
+                isLoading = false
             }
-            
-            dailyForecast = dailyWeather.forecast.forecastday
         } catch {
-            dailyForecast = []
+            await MainActor.run {
+                dailyForecast = []
+                isLoading = false
+            }
         }
-        isLoading = false
     }
+    
     func formatDateToWeekday(_ dateStr: String) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"

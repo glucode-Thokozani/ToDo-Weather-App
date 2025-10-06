@@ -28,7 +28,7 @@ enum WeatherServiceError: Error, LocalizedError {
     }
 }
 
-class WeatherService {
+class WeatherService: WeatherServiceProtocol {
     private let apiKey = ProcessInfo.processInfo.environment["Weather_Api_Key"]
     private let baseURL = "https://api.weatherapi.com/v1/forecast.json"
     

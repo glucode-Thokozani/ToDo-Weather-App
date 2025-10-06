@@ -38,6 +38,7 @@ struct SimpleEntry: TimelineEntry {
     let emoji: String
 }
 
+
 struct ToDoAppWidgetEntryView : View {
     var entry: Provider.Entry
 

@@ -7,7 +7,7 @@
 import Foundation
 import RealmSwift
 
-class ToDo: Object {
+class ToDo: Object, Identifiable {
     @objc dynamic var id = UUID().uuidString
     @objc dynamic var task: String = ""
     @objc dynamic var dueDate: Date? = nil
