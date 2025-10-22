@@ -1,0 +1,46 @@
+//
+//  AddTaskViewModel.swift
+//  ToDoApp
+//
+//  Created by Thokozani Mncube on 2025/08/25.
+//
+import RealmSwift
+import Combine
+import Foundation
+
+class AddTaskViewModel: ObservableObject {
+    private let toDoRepository: ToDoRepositoryProtocol
+    
+    @Published var taskTitle: String = ""
+    @Published var dueDate: Date = Date()
+    @Published var errorMessage: String? = nil
+    
+    private let category: Category
+    
+    init(category: Category, toDoRepository: ToDoRepositoryProtocol) {
+        self.category = category
+        self.toDoRepository = toDoRepository
+    }
+    
+    func addTask() {
+        let trimmedTitle = taskTitle.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmedTitle.isEmpty else {
+            errorMessage = "Task title can't be empty"
+            return
+        }
+        
+        let newTask = ToDo()
+        newTask.task = trimmedTitle
+        newTask.dueDate = dueDate
+        
+        do {
+            try toDoRepository.addTodo(to: category, todo: newTask)
+            taskTitle = ""
+            dueDate = Date()
+            errorMessage = nil
+        } catch {
+            errorMessage = "Failed to add task: \(error.localizedDescription)"
+        }
+    }
+}
+

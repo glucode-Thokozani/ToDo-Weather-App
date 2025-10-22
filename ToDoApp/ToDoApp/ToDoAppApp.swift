@@ -6,10 +6,20 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 @main
-struct ToDoAppApp: App {
+struct ToDoAppApp: SwiftUI.App {
     init() {
+        let config = Realm.Configuration(schemaVersion: 1) { migration, oldSchemaVersion in
+            if oldSchemaVersion < 1 {
+                migration.enumerateObjects(ofType: "Category") { _, newObject in
+                    newObject?["updatedAt"] = Date()
+                }
+            }
+        }
+        Realm.Configuration.defaultConfiguration = config
+
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = .clear
@@ -23,7 +33,7 @@ struct ToDoAppApp: App {
             UITabBar.appearance().scrollEdgeAppearance = appearance
         }
         
-        UISegmentedControl.appearance().selectedSegmentTintColor = UIColor.lightBlue
+        UISegmentedControl.appearance().selectedSegmentTintColor = UIColor.systemIndigo
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .normal)
     }
@@ -38,20 +48,17 @@ struct ToDoAppApp: App {
 struct WeatherTasksTabView: View {
     var body: some View {
         TabView {
-            WeatherView()
+            DependencyContainer.shared.weatherView
                 .tabItem {
                     Image(systemName: "cloud.sun")
                     Text("Weather")
                 }
-            
-            TasksView()
+            DependencyContainer.shared.tasksView
                 .tabItem {
-                    Image(systemName: "square.and.pencil")
+                    Image(systemName: "list.bullet")
                     Text("Task")
                 }
         }
-        .accentColor(.blue)
+        .accentColor(.indigo)
     }
 }
-
-
