@@ -31,11 +31,6 @@ struct WeatherProvider: TimelineProvider {
     }
     
     private func loadEntry() -> WeatherEntry {
-#if DEBUG
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
-            return WeatherEntry(date: Date(), temperature: 26, condition: "Sunny", city: "Johannesburg")
-        }
-#endif
         
         let sharedDefaults = UserDefaults(suiteName: "group.com.TK.ToDoApp")
         let temperature = sharedDefaults?.integer(forKey: "temperature") ?? 0
@@ -48,7 +43,6 @@ struct WeatherProvider: TimelineProvider {
 
 struct WeatherWidgetEntryView: View {
     var entry: WeatherProvider.Entry
-    //var action: () -> Void
     
     var body: some View {
         HStack {
@@ -65,7 +59,7 @@ struct WeatherWidgetEntryView: View {
             
             VStack {
                 VStack(alignment: .leading) {
-                    Text("Blah blah blah")
+                    Text("No Tasks for today ;)")
                         .foregroundColor(.white)
                         .frame(width: 150, height: 50, alignment: .topLeading)
                         .font(.system(size: 14, weight: .semibold))
@@ -78,11 +72,30 @@ struct WeatherWidgetEntryView: View {
                 HStack {
                     Spacer()
                     Link(destination: URL(string: "myapp://addtask")!) {
-                        Text("Add Task")
-                            .foregroundColor(.black)
-                            .padding(7)
-                            .background(Color.white)
-                            .cornerRadius(19)
+                        HStack{
+                            ZStack {
+                                Rectangle()
+                                    .fill(Color.white)
+                                    .cornerRadius(12)
+                                    .frame(width: 90, height: 35)
+                                
+                                Text("🔍 Location")
+                                    .font(.system(size: 12))
+                                    .foregroundColor(.black)
+                                    .padding(7)
+                            }
+                            ZStack {
+                                Rectangle()
+                                    .fill(Color.white)
+                                    .cornerRadius(12)
+                                    .frame(width: 80, height: 35)
+                                
+                                Text("Add Task")
+                                    .font(.system(size: 12))
+                                    .foregroundColor(.black)
+                                    .padding(7)
+                            }
+                        }
                     }
                 }
             }
@@ -96,7 +109,7 @@ struct WeatherWidgetEntryView: View {
 struct DayTimeView: View {
     var body: some View {
         LinearGradient(
-            gradient: Gradient(colors: [Color.blue.opacity(0.55), Color("WidgetDayTime")]),
+            gradient: Gradient(colors: [Color.blue.opacity(0.6), Color("WidgetDayTime")]),
             startPoint: .top,
             endPoint: .bottom
         )
@@ -126,12 +139,20 @@ struct WeatherWidget: Widget {
     }
 }
 
-#Preview(as: .systemMedium) {
-    WeatherWidget()
-} timeline: {
-    WeatherEntry(date: .now, temperature: 26, condition: "Sunny", city: "Johannesburg")
-    WeatherEntry(date: .now.addingTimeInterval(3600), temperature: 28, condition: "Partly Cloudy", city: "Johannesburg")
+extension WeatherEntry {
+    static func fromSharedDefaults() -> WeatherEntry {
+        let sharedDefaults = UserDefaults(suiteName: "group.com.TK.ToDoApp")
+        let temp = 22
+        let condition = "Sunny"
+        let city = "Johannesburg"
+        return WeatherEntry(date: Date(), temperature: temp, condition: condition, city: city)
+    }
 }
 
-
+struct WeatherWidget_Previews: PreviewProvider {
+    static var previews: some View {
+        WeatherWidgetEntryView(entry: WeatherEntry.fromSharedDefaults())
+            .previewContext(WidgetPreviewContext(family: .systemMedium))
+    }
+}
 
