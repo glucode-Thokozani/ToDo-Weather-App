@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "336E8294-6BCB-4792-A00F-9661D4916840",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:ToDoApp.xcodeproj",
+        "identifier" : "F4AE892C2E5462610082ADC4",
+        "name" : "ToDoAppTests"
+      }
+    }
+  ],
+  "version" : 1
+}
